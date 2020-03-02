@@ -1,6 +1,6 @@
 // Important State Machine States
-'define Start		4'b0001
-'define Decode  	4'b0002
+'define Start		4'b1000
+'define Decode  	4'b1001
 
 // Basic sizes
 'OPSIZE			[7:0]
@@ -18,10 +18,16 @@
 'define Imm8		[11:4]
 
 //Instruction Codes
-'define jrOrTrap	4'b0000
-'define not 		4'b0001
-'define conversions	4'b0010
-'define anyOrNeg	4'b0011
+'define JrOrTrap	4'b0000
+'define Not 		4'b0001
+'define Conversions	4'b0010
+'define AnyOrNeg	4'b0011
+'define LdOrSt		4'b0100
+'define Bitwise		4'b0101
+'define PositArith	4'b0110
+'define IntArith	4'b0111
+'define Cx		4'b1011
+'define Branches	4'b1110
 
 // TODO: complete ALU
 module alu()
@@ -63,7 +69,37 @@ module processor(halt, reset, clk);
 					pc <= pc + 1;
 					op <= {ir 'Op0, ir 'Op1};
 					rn <= ir 'Reg0;
-					s  <= 
+					s  <= ir 'Op0;
+				end
+			'JrOrTrap:
+				begin
+				end
+			'Not:
+				begin
+				end
+			'Conversions:
+				begin
+				end
+			'AnyOrNeg:
+				begin
+				end
+			'LdOrSt:
+				begin
+				end
+			'Bitwise:
+				begin
+				end
+			'PositArith:
+				begin
+				end
+			'IntArith:
+				begin
+				end
+			'Cx:
+				begin
+				end
+			'Branches:
+				begin
 				end
 			// TODO: add other state cases like jumps, branches, and arithmetic operations.
 			default: begin sys <= ir 'Imm8; halt <= 1; end; // halts the program and saves the current instruction
