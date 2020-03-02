@@ -90,6 +90,7 @@ module processor(halt, reset, clk);
 				end
 			`Conversions:
 				begin
+					s <= 4'b0000;
 				end
 			`AnyOrNeg:
 				begin
