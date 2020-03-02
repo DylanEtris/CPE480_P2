@@ -12,6 +12,12 @@
 //NOTE: I could be wrong about these, I generated them from Dr. Deitz's assembler implementation
 'define Op0		[15:12]
 'define Op1		[11:8]
+
+
+
+
+
+
 'define Reg0	[3:0]
 'define Reg1	[7:4]
 'define Imm8	[11:4]
