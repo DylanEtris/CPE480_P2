@@ -98,10 +98,19 @@ module processor(halt, reset, clk);
 			`IntArith:
 				begin
 				end
-			`Cx:
+			`Ci8:
 				begin
 				end
-			`Branches:
+			`Cii:
+				begin
+				end
+			`Cup:
+				begin
+				end
+			`Bz:
+				begin
+				end
+			`Bnz:
 				begin
 				end
 			// TODO: add other state cases like jumps, branches, and arithmetic operations.
