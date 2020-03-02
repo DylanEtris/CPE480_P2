@@ -26,8 +26,11 @@
 'define Bitwise		4'b0101
 'define PositArith	4'b0110
 'define IntArith	4'b0111
-'define Cx		4'b1011
-'define Branches	4'b1110
+'define Ci8		4'b1011
+'define Cii		4'b1100
+'define Cup		4'b1101
+'define Bz		4'b1110
+'define Bnz		4'b1111
 
 // TODO: complete ALU
 module alu()
