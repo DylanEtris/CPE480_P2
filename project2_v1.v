@@ -19,7 +19,6 @@
 
 //Instruction Codes
 `define JrOrTrap	4'b0000
-`define Not 		4'b0001
 `define Conversions	4'b0010
 `define AnyOrNeg	4'b0011
 `define LdOrSt		4'b0100
@@ -76,9 +75,18 @@ module processor(halt, reset, clk);
 				end
 			`JrOrTrap:
 				begin
+					case (op 'Op1)
+						4'b0000:
+							s <= 4'b0000;
+						4'b0001:
+							pc <= r [rn] `REGSIZE;
+					endcase
+					s <= `Start;
 				end
-			`Not:
+			`Not: 
 				begin
+					r [rn] `REGSIZE <= ~ r [rn] `REGSIZE;
+					s <= `Start;
 				end
 			`Conversions:
 				begin
