@@ -18,6 +18,8 @@
 
 // TODO: complete ALU
 module alu()
+	
+endmodule
 
 module processor(halt, reset, clk);
 	//control signal definitions
