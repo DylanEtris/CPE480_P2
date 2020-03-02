@@ -2,42 +2,6 @@
 'define Start		4'b1000
 'define Decode  	4'b1001
 
-// opcode values
-'define OPjr 0x01
-'define OPnot 0x10
-'define OPi2p 0x20
-'define OPii2pp 0x21
-'define OPp2i 0x22
-'define OPpp2ii 0x23
-'define OPinvp 0x24
-'define OPinvpp 0x25
-'define OPanyi 0x30
-'define OPanyii 0x31
-'define OPnegi 0x32
-'define OPnegii 0x33
-'define OPld 0x40
-'define OPst 0x41
-'define OPand 0x50
-'define OPor 0x51
-'define OPxor 0x52
-'define OPaddp 0x60
-'define OPaddpp 0x61
-'define OPmulp 0x62
-'define OPmulpp 0x63
-'define OPaddi 0x70
-'define OPaddii 0x71
-'define OPmuli 0x72
-'define OPmulii 0x73
-'define OPshi 0x74
-'define OPshii 0x75
-'define OPslti 0x76
-'define OPsltii 0x77
-'define OPci8 0xb
-'define OPcii 0xc
-'define OPcup 0xd
-'define OPbz 0xe
-'define OPbnz 0xf
-
 // Basic sizes
 'OPSIZE			[7:0]
 'define STATE		[3:0]
