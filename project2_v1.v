@@ -3,7 +3,7 @@
 `define Decode  	4'b1001
 
 // Basic sizes
-`OPSIZE			[7:0]
+`define OPSIZE			[7:0]
 `define STATE		[3:0]
 `define WORD		[15:0]
 `define MEMSIZE 	[65535:0]	// Total amount of instructions in memory
