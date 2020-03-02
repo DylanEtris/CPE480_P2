@@ -33,7 +33,7 @@
 `define Bnz		4'b1111
 
 // TODO: complete ALU
-module alu()
+module alu();
 	
 endmodule
 
