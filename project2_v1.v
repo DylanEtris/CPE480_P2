@@ -75,7 +75,7 @@ module processor(halt, reset, clk);
 				end
 			`JrOrTrap:
 				begin
-					case (op 'Op1)
+					case (op [3:0])
 						4'b0000:
 							s <= 4'b0000;
 						4'b0001:
@@ -103,9 +103,13 @@ module processor(halt, reset, clk);
 				end
 			`PositArith:
 				begin
+					s <= 4'b0000;
 				end
 			`IntArith:
 				begin
+					case (op [3:0])
+						4'b0000:
+							
 				end
 			`Ci8:
 				begin
