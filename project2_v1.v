@@ -16,6 +16,8 @@
 `define Reg0		[3:0]
 `define Reg1		[7:4]
 `define Imm8		[11:4]
+`define HighBits	[15:8]
+`define LowBits		[7:0]
 
 //4 bit op codes
 `define LdOrSt		4'b0010
@@ -43,7 +45,8 @@
 `define OPnegi		8'b00110010
 `define OPnegii		8'b00110011
 `define OPand		8'b01010000
-`define OPxor		8'b01010001
+`define OPor		8'b01010001
+`define OPxor		8'b01010010
 `define OPaddp		8'b01100000
 `define OPaddpp		8'b01100001
 `define OPmulp		8'b01100010
@@ -63,13 +66,52 @@ module alu(rd, rs, op, out);
 	input wire `WORD rs;
 	input wire `OPSIZE op;
 	output wire `WORD out;
+	
+	//These are the operations 
 	always @* begin 
 		case (op)
-			`OPaddi: 
-				begin
-					out = rd + rs;
-				end
-			`OPaddii:
+			`OPaddi:  begin out = rd `WORD + rs `WORD; end
+			`OPaddii: begin
+				out `HighBits = rd `HighBits + rs `HighBits; 
+				out `LowBits = rd `LowBits + rs `LowBits;
+			end
+			`OPmuli: begin out = rd `WORD * rs `WORD; end
+			`OPmulii: begin 
+				out `HighBits = rd `HighBits * rs `HighBits; 
+				out `LowBits = rd `LowBits * rs `LowBits; 
+			end
+			`OPshi: begin out = ((rs `WORD > 0) ? (rd `WORD << rs `WORD) : (rd[15:0] >> -rs[15:0])); end
+			`OPshii: begin 
+				out `HighBits = ((rs `HighBits >0)?(rd `HighBits <<rs `HighBits):(rd `HighBits >>-rs `HighBits ));
+				out `LowBits = ((rs `LowBits >0)?(rd `LowBits <<rs `LowBits):(rd `LowBits >>-rs `LowBits ));
+			end
+			`OPslti: begin out = rd `WORD < rs `WORD; end
+			`OPsltii: begin 
+				out = rd[15:8] < rs[15:8]; 
+				rd[7:0] = rd[7:0] < rs[7:0]; 
+			end
+			`OPaddp: begin end
+			`OPaddpp: begin end
+			`OPmulp: begin end
+			`OPmulpp: begin end
+			`OPand: begin out = rd & rs; end
+			`OPor: begin out = rd | rs; end
+			`OPxor: begin out = rd ^ rs; end
+			`OPanyi: begin out = (rd ? -1: 0); end
+			`OPanyii: begin out = (rd[15:8] ? -1 : 0); rd[7:0] = (rd[7:0] ? -1 : 0); end
+			`OPnegi: begin out = ~rd; end
+			`OPnegii: begin 
+				out `HighBits = ~rd `HighBits; 
+				out `LowBits = ~rd `LowBits; 
+			end
+			`OPi2p: begin end
+			`OPii2pp: begin end
+			`OPp2i: begin end
+			`OPpp2ii: begin end
+			`OPinvp: begin end
+			`OPinvpp: begin end
+			`OPnot: begin out = ~rd; end	
+		endcase	
 	end
 endmodule
 
