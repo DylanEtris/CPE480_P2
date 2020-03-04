@@ -152,8 +152,8 @@ module processor(halt, reset, clk);
 		s <= `Start;
 
 		//The following functions read from VMEM?
-		//readmemh1(text);
-		//readmemh2(data);
+		readmemh1(text);
+		readmemh2(data);
 	end
 
 	always @(posedge clk) begin
