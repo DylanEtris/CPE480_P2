@@ -169,8 +169,9 @@ module processor(halt, reset, clk);
 			`LdOrSt:
 				begin
 					case (op)
-						`OPld
-						`OPst
+						`OPld:
+						`OPst:
+					endcase
 				end
 			`OPci8:
 				begin
