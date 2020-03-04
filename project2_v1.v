@@ -95,8 +95,8 @@ module alu(rd, rs, op, aluOut, aluTrap);
 			end
 			`OPslti: begin out = rd `WORD < rs `WORD; end
 			`OPsltii: begin 
-				out = rd[15:8] < rs[15:8]; 
-				rd[7:0] = rd[7:0] < rs[7:0]; 
+				out `HighBits= rd `HighBits < rs `HighBits; 
+				out `LowBits = rd `LowBits < rs `LowBits; 
 			end
 			`OPaddp: begin assign trap = 1; end
 			`OPaddpp: begin trap = 1; end
@@ -106,7 +106,10 @@ module alu(rd, rs, op, aluOut, aluTrap);
 			`OPor: begin out = rd | rs; end
 			`OPxor: begin out = rd ^ rs; end
 			`OPanyi: begin out = (rd ? -1: 0); end
-			`OPanyii: begin out = (rd[15:8] ? -1 : 0); rd[7:0] = (rd[7:0] ? -1 : 0); end
+			`OPanyii: begin 
+				out `HighBits= (rd `HighBits] ? -1 : 0); 
+				out `LowBits = (rd `LowBits ? -1 : 0); 
+			end
 			`OPnegi: begin out = ~rd; end
 			`OPnegii: begin 
 				out `HighBits = ~rd `HighBits; 
