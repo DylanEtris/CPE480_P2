@@ -169,7 +169,11 @@ module processor(halt, reset, clk);
 				begin
 					case (op)
 						`OPld:
+							begin
+							end
 						`OPst:
+							begin
+							end
 					endcase
 				end
 			`OPci8:
