@@ -131,7 +131,7 @@ module processor(halt, reset, clk);
 	output reg halt;
 	input reset, clk;
 	reg `STATE s;
-	wire `OPSIZE op;
+	reg `OPSIZE op;
 
 	//processor component definitions
 	reg `WORD text `MEMSIZE;		// instruction memory
@@ -139,10 +139,10 @@ module processor(halt, reset, clk);
 	reg `WORD pc = 0;
 	reg `WORD ir;
 	reg `WORD regfile `REGSIZE;		// Register File Size
-	reg `WORD rd;
-	wire `WORD rs, aluOut;
+	reg `WORD rd, rs;
+	wire `WORD aluOut, aluOp;
 	wire trap;
-	alu myalu(rd, rs, op, aluOut, trap);
+	alu myalu(rd, rs, aluOp, aluOut, trap);
 
 	//processor initialization
 	always @(posedge reset) begin
@@ -166,7 +166,7 @@ module processor(halt, reset, clk);
 						end
 					`OPjr:
 						begin
-							//TODO do this instr
+							pc <= regfile[ ir `Reg0 ];
 						end
 				endcase
 			 end // halts the program and saves the current instruction
@@ -181,9 +181,13 @@ module processor(halt, reset, clk);
 					case (op)
 						`OPld:
 							begin
+								rs <= regfile [ir `Reg1];
+								regfile [ir `Reg0] <= data[rs];
 							end
 						`OPst:
 							begin
+								rs <= regfile [ir `Reg1];
+								data[rs] = regfile [ir `Reg0];
 							end
 					endcase
 				end
@@ -204,8 +208,8 @@ module processor(halt, reset, clk);
 				end
 			default: //default cases are handled by ALU
 				begin
-					rd <= rn [ir `Reg0];
-					rs <= rn [ir `Reg1];
+					rd <= regfile [ir `Reg0];
+					rs <= regfile [ir `Reg1];
 					rn [ir `Reg0] <= aluOut;
 				end
 		endcase	
