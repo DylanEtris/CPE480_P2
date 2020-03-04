@@ -65,20 +65,20 @@ module alu(rd, rs, op, out);
 	input `WORD rd;
 	input wire `WORD rs;
 	input wire `OPSIZE op;
-	output wire `WORD out;
+	output `WORD out;
 	
 	//These are the operations 
 	always @* begin 
 		case (op)
-			`OPaddi:  begin out = rd `WORD + rs `WORD; end
+			`OPaddi:  begin assign out = rd `WORD + rs `WORD; end
 			`OPaddii: begin
-				out `HighBits = rd `HighBits + rs `HighBits; 
-				out `LowBits = rd `LowBits + rs `LowBits;
+				assign out `HighBits = rd `HighBits + rs `HighBits; 
+				assign out `LowBits = rd `LowBits + rs `LowBits;
 			end
-			`OPmuli: begin out = rd `WORD * rs `WORD; end
+			`OPmuli: begin assign out = rd `WORD * rs `WORD; end
 			`OPmulii: begin 
-				out `HighBits = rd `HighBits * rs `HighBits; 
-				out `LowBits = rd `LowBits * rs `LowBits; 
+				assign out `HighBits = rd `HighBits * rs `HighBits; 
+				assign out `LowBits = rd `LowBits * rs `LowBits; 
 			end
 			`OPshi: begin out = ((rs `WORD > 0) ? (rd `WORD << rs `WORD) : (rd[15:0] >> -rs[15:0])); end
 			`OPshii: begin 
