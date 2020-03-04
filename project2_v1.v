@@ -107,7 +107,7 @@ module alu(rd, rs, op, aluOut, aluTrap);
 			`OPxor: begin out = rd ^ rs; end
 			`OPanyi: begin out = (rd ? -1: 0); end
 			`OPanyii: begin 
-				out `HighBits= (rd `HighBits] ? -1 : 0); 
+				out `HighBits= (rd `HighBits ? -1 : 0); 
 				out `LowBits = (rd `LowBits ? -1 : 0); 
 			end
 			`OPnegi: begin out = ~rd; end
