@@ -61,6 +61,7 @@
 `define OPsltii		8'b01110111
 
 // TODO: complete ALU
+
 module alu(rd, rs, op, out, trap);
 	input reg `WORD rd;
 	input wire `WORD rs;
@@ -160,10 +161,9 @@ module processor(halt, reset, clk);
 						end
 				endcase
 			 end // halts the program and saves the current instruction
-			`Start: begin ir <= text[pc]; s <= `Decode; end // Fetches first instruction and moves the state to decode
+			`Start: begin ir <= text[pc]; pc <= pc + 1; s <= `Decode; end // Fetches first instruction and moves the state to decode
 			`Decode: 
 				begin // TODO: Figure out how to assign state s to procede with next step.
-					pc <= pc + 1;
 					op <= {ir `Op0, ir `Op1};
 					s  <= ir `Op0;
 				end
@@ -171,7 +171,11 @@ module processor(halt, reset, clk);
 				begin
 					case (op)
 						`OPld:
+							begin
+							end
 						`OPst:
+							begin
+							end
 					endcase
 				end
 			`OPci8:
