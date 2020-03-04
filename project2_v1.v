@@ -62,7 +62,7 @@
 
 // TODO: complete ALU
 module alu(rd, rs, op, out);
-	input reg `WORD rd;
+	input `WORD rd;
 	input wire `WORD rs;
 	input wire `OPSIZE op;
 	output wire `WORD out;
