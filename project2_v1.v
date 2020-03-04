@@ -140,7 +140,8 @@ module processor(halt, reset, clk);
 	reg `WORD ir;
 	reg `WORD regfile `REGSIZE;		// Register File Size
 	reg `WORD rd, rs;
-	wire `WORD aluOut, aluOp;
+	wire `WORD aluOut;
+	wire `OPSIZE aluOp;
 	wire trap;
 	alu myalu(rd, rs, aluOp, aluOut, trap);
 
@@ -210,7 +211,7 @@ module processor(halt, reset, clk);
 				begin
 					rd <= regfile [ir `Reg0];
 					rs <= regfile [ir `Reg1];
-					rn [ir `Reg0] <= aluOut;
+					regfile [ir `Reg0] <= aluOut;
 				end
 		endcase	
 	end
