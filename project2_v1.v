@@ -158,10 +158,9 @@ module processor(halt, reset, clk);
 						end
 				endcase
 			 end // halts the program and saves the current instruction
-			`Start: begin ir <= text[pc]; s <= `Decode; end // Fetches first instruction and moves the state to decode
+			`Start: begin ir <= text[pc]; pc <= pc + 1; s <= `Decode; end // Fetches first instruction and moves the state to decode
 			`Decode: 
 				begin // TODO: Figure out how to assign state s to procede with next step.
-					pc <= pc + 1;
 					op <= {ir `Op0, ir `Op1};
 					rn <= ir `Reg0;
 					s  <= ir `Op0;
