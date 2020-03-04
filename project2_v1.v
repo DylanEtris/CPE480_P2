@@ -127,7 +127,7 @@ module processor(halt, reset, clk);
 	reg `WORD data `MEMSIZE;		// data memory
 	reg `WORD pc = 0;
 	reg `WORD ir;
-	reg `WORD r `REGSIZE;		// Register File Size
+	reg `WORD regfile `REGSIZE;		// Register File Size
 	reg `WORD rd;
 	wire `WORD rs;
 	alu myalu(rd, rs, op, aluOut);
