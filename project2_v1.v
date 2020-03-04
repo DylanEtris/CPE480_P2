@@ -61,11 +61,13 @@
 `define OPsltii		8'b01110111
 
 // TODO: complete ALU
-module alu(rd, rs, op, out);
-	input `WORD rd;
+
+module alu(rd, rs, op, out, trap);
+	input reg `WORD rd;
 	input wire `WORD rs;
 	input wire `OPSIZE op;
 	output wire `WORD out;
+	output wire trap;
 	
 	//These are the operations 
 	always @* begin 
@@ -90,10 +92,10 @@ module alu(rd, rs, op, out);
 				out = rd[15:8] < rs[15:8]; 
 				rd[7:0] = rd[7:0] < rs[7:0]; 
 			end
-			`OPaddp: begin end
-			`OPaddpp: begin end
-			`OPmulp: begin end
-			`OPmulpp: begin end
+			`OPaddp: begin trap = 1; end
+			`OPaddpp: begin trap = 1; end
+			`OPmulp: begin trap = 1; end
+			`OPmulpp: begin trap = 1; end
 			`OPand: begin out = rd & rs; end
 			`OPor: begin out = rd | rs; end
 			`OPxor: begin out = rd ^ rs; end
@@ -104,12 +106,12 @@ module alu(rd, rs, op, out);
 				out `HighBits = ~rd `HighBits; 
 				out `LowBits = ~rd `LowBits; 
 			end
-			`OPi2p: begin end
-			`OPii2pp: begin end
-			`OPp2i: begin end
-			`OPpp2ii: begin end
-			`OPinvp: begin end
-			`OPinvpp: begin end
+			`OPi2p: begin trap = 1; end
+			`OPii2pp: begin trap = 1; end
+			`OPp2i: begin trap = 1; end
+			`OPpp2ii: begin trap = 1; end
+			`OPinvp: begin trap = 1; end
+			`OPinvpp: begin trap = 1end
 			`OPnot: begin out = ~rd; end	
 		endcase	
 	end
@@ -130,7 +132,8 @@ module processor(halt, reset, clk);
 	reg `WORD r `REGSIZE;		// Register File Size
 	reg `WORD rd;
 	wire `WORD rs;
-	alu myalu(rd, rs, op, aluOut);
+	wire trap;
+	alu myalu(rd, rs, op, aluOut, trap);
 
 	//processor initialization
 	always @(posedge reset) begin
@@ -162,7 +165,6 @@ module processor(halt, reset, clk);
 			`Decode: 
 				begin // TODO: Figure out how to assign state s to procede with next step.
 					op <= {ir `Op0, ir `Op1};
-					rn <= ir `Reg0;
 					s  <= ir `Op0;
 				end
 			`LdOrSt:
@@ -196,6 +198,8 @@ module processor(halt, reset, clk);
 					rd <= rn [ir `Reg0];
 					rs <= rn [ir `Reg1];
 					rn [ir `Reg0] <= aluOut;
+					s <= ((trap = 1)? 4'b0000: `Start);
+					op <= ((trap = 1)? `OPtrap: op);
 				end
 		endcase	
 	end
