@@ -66,7 +66,7 @@ module alu(rd, rs, op, aluOut, aluTrap);
 	input wire `WORD rs;
 	input wire `OPSIZE op;
 	output wire `WORD aluOut;
-	output wire trap;
+	output wire aluTrap;
 	
 	reg `WORD out;
 	assign aluOut = out;
