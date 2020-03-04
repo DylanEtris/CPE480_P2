@@ -127,8 +127,8 @@ module processor(halt, reset, clk);
 			`LdOrSt:
 				begin
 					case (op)
-						'OPld
-						'OPst
+						`OPld
+						`OPst
 				end
 			`OPci8:
 				begin
