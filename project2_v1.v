@@ -140,7 +140,8 @@ module processor(halt, reset, clk);
 	reg `WORD ir;
 	reg `WORD regfile `REGSIZE;		// Register File Size
 	reg `WORD rd;
-	wire `WORD rs, aluOut, trap;
+	wire `WORD rs, aluOut;
+	wire trap;
 	alu myalu(rd, rs, op, aluOut, trap);
 
 	//processor initialization
@@ -161,7 +162,7 @@ module processor(halt, reset, clk);
 				case (op)
 					`OPtrap: 
 						begin
-							sys <= ir `Imm8; halt <= 1; 
+							halt <= 1; 
 						end
 					`OPjr:
 						begin
