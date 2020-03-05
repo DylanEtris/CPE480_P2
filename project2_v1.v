@@ -168,6 +168,7 @@ module processor(halt, reset, clk);
 					`OPjr:
 						begin
 							pc <= regfile[ ir `Reg0 ];
+							s <= `Start;
 						end
 				endcase
 			 end // halts the program and saves the current instruction
@@ -184,34 +185,48 @@ module processor(halt, reset, clk);
 							begin
 								rs <= regfile [ir `Reg1];
 								regfile [ir `Reg0] <= data[rs];
+								s <= `Start;
 							end
 						`OPst:
 							begin
 								rs <= regfile [ir `Reg1];
 								data[rs] = regfile [ir `Reg0];
+								s <= `Start;
 							end
 					endcase
 				end
 			`OPci8:
 				begin
+					regfile [ir `Reg0] <= ((ir `Imm8 & 0x80) ? 0xff00 : 0) | (ir `Imm8 & 0xff);
+					s <= `Start;
 				end
 			`OPcii:
 				begin
+					regfile [ir `Reg0] `HighBits = ir `Imm8;
+					regfile [ir `Reg0] `LowBits = ir `Imm8;
+					s <= `Start;
 				end
 			`OPcup:
 				begin
+					regfile [ir `Reg0] `High Bits <= ir `Imm8;
+					s <= `Start;
 				end
 			`OPbz:
 				begin
+					if (regfile [ir `Reg0] == 0) pc <= ir `Imm8;
+					s <= `Start;
 				end
 			`OPbnz:
 				begin
+					if (regfile [ir `Reg0] != 0) pc <= `Imm8;
+					s <= `Start;
 				end
 			default: //default cases are handled by ALU
 				begin
 					rd <= regfile [ir `Reg0];
 					rs <= regfile [ir `Reg1];
 					regfile [ir `Reg0] <= aluOut;
+					s <= `Start;
 				end
 		endcase	
 	end
