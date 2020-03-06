@@ -79,7 +79,7 @@ module alu(rd, rs, op, aluOut, aluTrap);
 	//These are the operations 
 	always @* begin 
 		case (op)
-			`OPaddi:  begin out = rd `WORD + rs `WORD; $display(out);end
+			`OPaddi:  begin out = rd `WORD + rs `WORD;end
 			
 			`OPaddii: begin
 				out `HighBits = rd `HighBits + rs `HighBits; 
