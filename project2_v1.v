@@ -66,7 +66,8 @@ module alu(rd, rs, op, aluOut, aluTrap);
 	input wire `WORD rs;
 	input wire `OPSIZE op;
 	output wire `WORD aluOut;
-	output wire aluTrap;
+	output wire aluTrap; 
+	
 	
 	reg `WORD out;
 	assign aluOut = out;
@@ -78,7 +79,8 @@ module alu(rd, rs, op, aluOut, aluTrap);
 	//These are the operations 
 	always @* begin 
 		case (op)
-			`OPaddi:  begin out = rd `WORD + rs `WORD; end
+			`OPaddi:  begin out = rd `WORD + rs `WORD; $display(out);end
+			
 			`OPaddii: begin
 				out `HighBits = rd `HighBits + rs `HighBits; 
 				out `LowBits = rd `LowBits + rs `LowBits;
@@ -141,9 +143,8 @@ module processor(halt, reset, clk);
 	reg `WORD regfile `REGSIZE;		// Register File Size
 	reg `WORD rd, rs;
 	wire `WORD aluOut;
-	wire `OPSIZE aluOp;
 	wire trap;
-	alu myalu(rd, rs, aluOp, aluOut, trap);
+	alu myalu(regfile [ir `Reg0], regfile [ir `Reg1], op, aluOut, trap);
 
 	//processor initialization
 	always @(posedge reset) begin
@@ -152,8 +153,10 @@ module processor(halt, reset, clk);
 		s <= `Start;
 
 		//The following functions read from VMEM?
-		//$readmemh1(text);
-		//$readmemh2(data);
+		regfile[0] = 10;
+		regfile[1] = 20;
+		text[0] = 16'h7010;
+		text[1] = 16'h0000;
 	end
 
 	always @(posedge clk) begin
@@ -198,13 +201,13 @@ module processor(halt, reset, clk);
 				end
 			`OPci8:
 				begin
-					regfile [ir `Reg0] <= ((ir `Imm8 & 0x80) ? 0xff00 : 0) | (ir `Imm8 & 0xff);
+				//	regfile [ir `Reg0] <= ((ir `Imm8 & 0x80) ? 0xff00 : 0) | (ir `Imm8 & 0xff);
 					s <= `Start;
 				end
 			`OPcii:
 				begin
-					regfile [ir `Reg0] `HighBits = ir `Imm8;
-					regfile [ir `Reg0] `LowBits = ir `Imm8;
+					regfile [ir `Reg0] `HighBits <= ir `Imm8;
+					regfile [ir `Reg0] `LowBits <= ir `Imm8;
 					s <= `Start;
 				end
 			`OPcup:
@@ -224,8 +227,6 @@ module processor(halt, reset, clk);
 				end
 			default: //default cases are handled by ALU
 				begin
-					rd <= regfile [ir `Reg0];
-					rs <= regfile [ir `Reg1];
 					regfile [ir `Reg0] <= aluOut;
 					s <= `Start;
 				end
