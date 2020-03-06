@@ -153,10 +153,7 @@ module processor(halt, reset, clk);
 		s <= `Start;
 
 		//The following functions read from VMEM?
-		regfile[0] = 10;
-		regfile[1] = 20;
-		text[0] = 16'h7010;
-		text[1] = 16'h0000;
+		$readmemh0(text);
 	end
 
 	always @(posedge clk) begin
