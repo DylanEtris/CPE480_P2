@@ -152,8 +152,8 @@ module processor(halt, reset, clk);
 		s <= `Start;
 
 		//The following functions read from VMEM?
-		$readmemh1(text);
-		$readmemh2(data);
+		//$readmemh1(text);
+		//$readmemh2(data);
 	end
 
 	always @(posedge clk) begin
@@ -164,6 +164,7 @@ module processor(halt, reset, clk);
 					`OPtrap: 
 						begin
 							halt <= 1; 
+							$display(pc);
 						end
 					`OPjr:
 						begin
@@ -208,7 +209,7 @@ module processor(halt, reset, clk);
 				end
 			`OPcup:
 				begin
-					regfile [ir `Reg0] `High Bits <= ir `Imm8;
+					regfile [ir `Reg0] `HighBits <= ir `Imm8;
 					s <= `Start;
 				end
 			`OPbz:
