@@ -20,7 +20,7 @@
 `define LowBits		[7:0]
 
 //4 bit op codes
-`define LdOrSt		4'b0010
+`define LdOrSt		4'b0100
 `define TrapOrJr	4'b0000
 `define OPci8		4'b1011
 `define OPcii		4'b1100
@@ -31,8 +31,8 @@
 // 8 bit op codes
 `define OPtrap		8'b00000000
 `define OPjr 		8'b00000001
-`define OPld		8'b00100000
-`define OPst		8'b00100001
+`define OPld		8'b01000000
+`define OPst		8'b01000001
 `define OPnot		8'b00010000
 `define OPi2p		8'b00100000
 `define OPii2pp		8'b00100001
@@ -154,6 +154,7 @@ module processor(halt, reset, clk);
 
 		//The following functions read from VMEM?
 		$readmemh0(text);
+		$readmemh1(data);
 	end
 
 	always @(posedge clk) begin
@@ -165,6 +166,7 @@ module processor(halt, reset, clk);
 						begin
 							halt <= 1; 
 							$display(pc);
+							$display(regfile[0]);
 						end
 					`OPjr:
 						begin
@@ -184,14 +186,12 @@ module processor(halt, reset, clk);
 					case (op)
 						`OPld:
 							begin
-								rs <= regfile [ir `Reg1];
-								regfile [ir `Reg0] <= data[rs];
+								regfile [ir `Reg0] <= data[regfile [ir `Reg1]];
 								s <= `Start;
 							end
 						`OPst:
 							begin
-								rs <= regfile [ir `Reg1];
-								data[rs] = regfile [ir `Reg0];
+								data[regfile [ir `Reg1]] = regfile [ir `Reg0];
 								s <= `Start;
 							end
 					endcase
