@@ -233,7 +233,13 @@ module processor(halt, reset, clk);
 				begin
 					regfile [ir `Reg0] <= aluOut;
 					pc <= pc + 1;
-					s <= `Start;
+					if (trap == 0) begin
+						s <= `Start;
+					end
+					else begin
+						s <= 4'b0000;
+					        op <= `OPtrap;
+					end
 				end
 		endcase	
 	end
