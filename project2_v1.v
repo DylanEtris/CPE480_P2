@@ -175,7 +175,7 @@ module processor(halt, reset, clk);
 						end
 				endcase
 			 end // halts the program and saves the current instruction
-			`Start: begin ir <= text[pc]; pc <= pc + 1; s <= `Decode; end // Fetches first instruction and moves the state to decode
+			`Start: begin ir <= text[pc];  s <= `Decode; end // Fetches first instruction and moves the state to decode
 			`Decode: 
 				begin // TODO: Figure out how to assign state s to procede with next step.
 					op <= {ir `Op0, ir `Op1};
@@ -187,11 +187,13 @@ module processor(halt, reset, clk);
 						`OPld:
 							begin
 								regfile [ir `Reg0] <= data[regfile [ir `Reg1]];
+								pc <= pc + 1;
 								s <= `Start;
 							end
 						`OPst:
 							begin
 								data[regfile [ir `Reg1]] = regfile [ir `Reg0];
+								pc <= pc + 1;
 								s <= `Start;
 							end
 					endcase
@@ -199,17 +201,20 @@ module processor(halt, reset, clk);
 			`OPci8:
 				begin
 					regfile [ir `Reg0] <= ((ir `Imm8 & 8'h80) ? 16'hff00 : 0) | (ir `Imm8 & 8'hff);
+					pc <= pc + 1;
 					s <= `Start;
 				end
 			`OPcii:
 				begin
 					regfile [ir `Reg0] `HighBits <= ir `Imm8;
 					regfile [ir `Reg0] `LowBits <= ir `Imm8;
+					pc <= pc + 1;
 					s <= `Start;
 				end
 			`OPcup:
 				begin
 					regfile [ir `Reg0] `HighBits <= ir `Imm8;
+					pc <= pc + 1;
 					s <= `Start;
 				end
 			`OPbz:
@@ -225,6 +230,7 @@ module processor(halt, reset, clk);
 			default: //default cases are handled by ALU
 				begin
 					regfile [ir `Reg0] <= aluOut;
+					pc <= pc + 1;
 					s <= `Start;
 				end
 		endcase	
