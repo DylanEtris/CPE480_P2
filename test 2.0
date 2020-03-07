@@ -1,0 +1,18 @@
+        ci8   $r0, 3
+        bnz    $r0, l1
+        trap
+l1:     cii   $r1, 5
+        slti  $r1, $r0
+        bz    $r1, l2
+        trap
+l2:     muli  $r0, $r0
+        bnz   $r0, l3
+        trap
+l3:     ci8   $r3, 6
+        ci8   $r4, 6
+        negi  $r4
+	      addi  $r3, $r4
+        bz    $r3, l4
+        trap
+l4:     addi  $r0, $r0
+        trap
