@@ -1,12 +1,17 @@
 .text
-   	cii 	$r0, 0
-  	bz  	$r0, .+2
+   	cii 	$r0, 0      ; cii test
+   	bz  	$r0, .+2    ; bz test
    	trap
-   	ld 	$r1, $r0
-   	bnz 	$r1, .+2
+   	ld 	$r1, $r0    ; ld test
+   	bnz 	$r1, .+2    ; bnz test
    	trap
-   	addi 	$r0, $r1
+   	addi 	$r0, $r1    ; addi test
    	bnz 	$r0, .+2
+      trap
+      ci8   $r2, -1     ; ci8 test
+      ci8   $r3, 1 
+      addi  $r2, $r3
+      bz    $r2, .+2
    	trap
    	trap
 .data
