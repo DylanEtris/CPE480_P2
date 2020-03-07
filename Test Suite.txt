@@ -1,0 +1,14 @@
+.text
+   	cii 	$r0, 0
+  	bz  	$r0, .+2
+   	trap
+   	ld 	$r1, $r0
+   	bnz 	$r1, .+2
+   	trap
+   	addi 	$r0, $r1
+   	bnz 	$r0, .+2
+   	trap
+   	trap
+.data
+   	.word 7
+   	.word 11
