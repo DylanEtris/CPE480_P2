@@ -112,10 +112,10 @@ module alu(rd, rs, op, aluOut, aluTrap);
 				out `HighBits= (rd `HighBits ? -1 : 0); 
 				out `LowBits = (rd `LowBits ? -1 : 0); 
 			end
-			`OPnegi: begin out = ~rd; end
+			`OPnegi: begin out = -rd; end
 			`OPnegii: begin 
-				out `HighBits = ~rd `HighBits; 
-				out `LowBits = ~rd `LowBits; 
+				out `HighBits = -rd `HighBits; 
+				out `LowBits = -rd `LowBits; 
 			end
 			`OPi2p: begin trap = 1; end
 			`OPii2pp: begin trap = 1; end
