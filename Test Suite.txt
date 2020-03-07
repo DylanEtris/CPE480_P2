@@ -13,11 +13,12 @@
       addi  $r2, $r3
       bz    $r2, .+2
    	trap
-	ci8		$r0, 0
-	cup     $r0, 1
-	bnz     $r0
-	trap
+      cii   $r4, 1
+      cii   $r5, -1
+      addii $r4, $r5    ; addii test
+      bz    $r4, .+2
    	trap
+      addp
 .data
    	.word 7
    	.word 11
