@@ -219,12 +219,14 @@ module processor(halt, reset, clk);
 				end
 			`OPbz:
 				begin
-					if (regfile [ir `Reg0] == 0) pc <= pc + ir `Imm8;
+					if (regfile [ir `Reg0] == 0)
+						pc <= pc + ir `Imm8;
 					s <= `Start;
 				end
 			`OPbnz:
 				begin
-					if (regfile [ir `Reg0] != 0) pc <= pc + ir `Imm8;
+					if (regfile [ir `Reg0] != 0)
+						pc <= pc + ir `Imm8;
 					s <= `Start;
 				end
 			default: //default cases are handled by ALU
