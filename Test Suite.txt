@@ -1,5 +1,7 @@
 .text
    	cii 	$r0, 0      ; cii test
+	ci8     $r1, 5
+	jr      $r1 	    ; jr test
    	bz  	$r0, .+2    ; bz test
    	trap
    	
