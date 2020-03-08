@@ -77,6 +77,12 @@
 	sltii $r0, $r1
 	bz  $r0, .+2
 	trap
+	cii $r0, 0
+	cii $r1, 1
+	sltii $r0, $r1
+	bnz $r0, .+2
+	trap
+	
 	trap
 
 .data
