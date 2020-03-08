@@ -57,6 +57,13 @@
 	mulii	$r0, $r1
 	bnz 	$r0, .+2
 	trap
+	ci8     $r0, 1
+	invp    $r0
+	bz      $r0, .+2
+	ci8     $r0, 1
+	invpp   $r0
+	bz      $r0, .+2
+	trap
 	trap
 .data
    	.word 7
