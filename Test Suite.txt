@@ -2,29 +2,35 @@
    	cii 	$r0, 0      ; cii test
    	bz  	$r0, .+2    ; bz test
    	trap
-   	ld 	$r1, $r0    ; ld test
+   	
+	ld 	$r1, $r0    ; ld test
    	bnz 	$r1, .+2    ; bnz test
    	trap
-   	addi 	$r0, $r1    ; addi test
+   	
+	addi 	$r0, $r1    ; addi test
    	bnz 	$r0, .+2
     trap
-    ci8   $r2, -1     ; ci8 test
+    
+	ci8   $r2, -1     ; ci8 test
     ci8   $r3, 1 
     addi  $r2, $r3
     bz    $r2, .+2
    	trap
-    cii   $r4, 1
+    
+	cii   $r4, 1
     cii   $r5, -1
     addii $r4, $r5    ; addii test
     bz    $r4, .+2
    	trap
+	
 	ci8  $r0, 0       ; shi test
     cup  $r0, 0x80
     ci8  $r1, 1
     shi  $r0, $r1
 	bz   $r0, .+2
     trap
-    addp
+    
+	addp
 .data
    	.word 7
    	.word 11
