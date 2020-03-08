@@ -38,17 +38,13 @@
 	bz   $r0, .+2
 	trap
 
-	ci8  $r0, 0x80	  ; shii test
-	cup  $r0, 0x80
-	ci8  $r1, 0x80
-	cup  $r1, 0x80
+	cii  $r0, 0x80	  ; shii test
+	cii  $r1, 0x80
 	shii $r0, $r1
 	bz   $r0, .+2
 	trap
-	ci8  $r0, 0x80
-	cup  $r0, 0x80
-	ci8  $r1, -1
-	cup  $r1, -1
+	cii  $r0, 0x80
+	cii  $r1, -1
 	shii $r0, $r1	
 	bz   $r0, .+2
 	trap
