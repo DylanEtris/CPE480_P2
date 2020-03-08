@@ -165,8 +165,6 @@ module processor(halt, reset, clk);
 					`OPtrap: 
 						begin
 							halt <= 1; 
-							$display(pc);
-							$display(regfile[0]);
 						end
 					`OPjr:
 						begin
