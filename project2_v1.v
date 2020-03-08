@@ -7,7 +7,7 @@
 `define STATE		[3:0]
 `define WORD		[15:0]
 `define MEMSIZE 	[65535:0]	// Total amount of instructions in memory
-`define REGSIZE 	[7:0]		// Number of Registers
+`define REGSIZE 	[15:0]		// Number of Registers
 
 //Instruction Field Placements
 //NOTE: I could be wrong about these, I generated them from Dr. Deitz's assembler implementation
