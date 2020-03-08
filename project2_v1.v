@@ -61,25 +61,20 @@
 `define OPsltii		8'b01110111
 
 // TODO: complete ALU
-module alu(rd, rs, op, aluOut, aluTrap);
+module alu(rd, rs, op, aluOut);
 	input `WORD rd;
 	input wire `WORD rs;
 	input wire `OPSIZE op;
 	output wire `WORD aluOut;
-	output wire aluTrap; 
 	
 	
 	reg `WORD out;
 	assign aluOut = out;
 	
-	reg trap;
-	assign aluTrap = trap;
-	
-	
 	//These are the operations 
 	always @* begin 
 		case (op)
-			`OPaddi:  begin out = rd `WORD + rs `WORD;end
+			`OPaddi:  begin out = rd `WORD + rs `WORD; end
 			
 			`OPaddii: begin
 				out `HighBits = rd `HighBits + rs `HighBits; 
@@ -100,10 +95,16 @@ module alu(rd, rs, op, aluOut, aluTrap);
 				out `HighBits= rd `HighBits < rs `HighBits; 
 				out `LowBits = rd `LowBits < rs `LowBits; 
 			end
-			`OPaddp: begin assign trap = 1; end
-			`OPaddpp: begin trap = 1; end
-			`OPmulp: begin trap = 1; end
-			`OPmulpp: begin trap = 1; end
+			`OPaddp: begin out = rd `WORD + rs `WORD; end
+			`OPaddpp: begin 
+				out `HighBits = rd `HighBits + rs `HighBits; 
+				out `LowBits = rd `LowBits + rs `LowBits;
+			end
+			`OPmulp: begin out = rd `WORD * rs `WORD; end
+			`OPmulpp: begin 
+				out `HighBits = rd `HighBits * rs `HighBits; 
+				out `LowBits = rd `LowBits * rs `LowBits; 
+			end
 			`OPand: begin out = rd & rs; end
 			`OPor: begin out = rd | rs; end
 			`OPxor: begin out = rd ^ rs; end
@@ -117,12 +118,12 @@ module alu(rd, rs, op, aluOut, aluTrap);
 				out `HighBits = -rd `HighBits; 
 				out `LowBits = -rd `LowBits; 
 			end
-			`OPi2p: begin trap = 1; end
-			`OPii2pp: begin trap = 1; end
-			`OPp2i: begin trap = 1; end
-			`OPpp2ii: begin trap = 1; end
-			`OPinvp: begin trap = 1; end
-			`OPinvpp: begin trap = 1; end
+			`OPi2p: begin out = rd; end
+			`OPii2pp: begin out = rd; end
+			`OPp2i: begin out = rd; end
+			`OPpp2ii: begin out = rd; end
+			`OPinvp: begin out = 0; end
+			`OPinvpp: begin out = 0; end
 			`OPnot: begin out = ~rd; end	
 		endcase	
 	end
@@ -143,8 +144,7 @@ module processor(halt, reset, clk);
 	reg `WORD regfile `REGSIZE;		// Register File Size
 	reg `WORD rd, rs;
 	wire `WORD aluOut;
-	wire trap;
-	alu myalu(regfile [ir `Reg0], regfile [ir `Reg1], op, aluOut, trap);
+	alu myalu(regfile [ir `Reg0], regfile [ir `Reg1], op, aluOut);
 
 	//processor initialization
 	always @(posedge reset) begin
