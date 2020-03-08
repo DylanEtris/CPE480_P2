@@ -30,5 +30,16 @@ l6:     ci8   $r6, 1
 l7:     xor   $r0, $r5
         bnz   $r0, l8
         trap
-l8:     addi  $r0, $r0
+l8:     anyi  $r0
+        ci8   $r1, 1
+        addi  $r0, $r1
+        bz    $r0, l9
+        trap
+l9:     cii   $r1, 2
+        anyii $r1
+        cii   $r0, 1
+        addii $r0, $r1
+        bz    $r0, l10
+        trap
+l10:    addi  $r0, $r0
         trap
