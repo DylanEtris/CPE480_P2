@@ -65,6 +65,14 @@
 	bz      $r0, .+2
 	trap
 	trap
+
+	cii $r0, 1       ; sltii test
+	cii $r1, 0
+	sltii $r0, $r1
+	bz  $r0, .+2
+	trap
+	trap
+
 .data
    	.word 7
    	.word 11
