@@ -52,8 +52,12 @@
 	shii $r0, $r1
 	bz   $r0, .+2
 	trap
-
-	addp
+	cii 	$r0, 1
+	cii 	$r1, 1
+	mulii	$r0, $r1
+	bnz 	$r0, .+2
+	trap
+	trap
 .data
    	.word 7
    	.word 11
