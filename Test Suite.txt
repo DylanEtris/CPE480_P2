@@ -84,7 +84,52 @@
 	ld 	$r2, $r0
 	bz	$r2, .+2
 	trap
-	trap
+				; extra testing
+        ci8   $r0, 3
+        bnz    $r0, l1
+        trap
+l1:     cii   $r1, 5
+        slti  $r1, $r0		; slti test
+        bz    $r1, l2
+        trap
+l2:     muli  $r0, $r0
+        ci8   $r5, 9
+        negi  $r5		; negi test
+        addi  $r0, $r5
+        bz   $r0, l3
+        trap
+l3:     ci8   $r3, 6
+        ci8   $r4, 6
+        negi  $r4
+	addi  $r3, $r4
+        bz    $r3, l4
+        trap
+l4:     and   $r0, $r5
+        bz    $r0, l5
+        trap
+l5:     invp  $r5		; invp test
+        bz    $r5, l6
+        trap
+l6:     ci8   $r6, 1
+        or    $r0, $r6		; or test
+        bnz   $r0, l7
+        trap
+l7:     xor   $r0, $r5		; xor test
+        bnz   $r0, l8
+        trap
+l8:     anyi  $r0		; anyi test
+        ci8   $r1, 1
+        addi  $r0, $r1
+        bz    $r0, l9
+        trap
+l9:     cii   $r1, 2
+        anyii $r1		; anyii test
+        cii   $r0, 1
+        addii $r0, $r1
+        bz    $r0, l10
+        trap
+l10:    addi  $r0, $r0
+        trap
 .data
    	.word 7
    	.word 11
