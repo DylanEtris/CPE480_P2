@@ -20,5 +20,15 @@ l3:     ci8   $r3, 6
 l4:     and   $r0, $r5
         bz    $r0, l5
         trap
-l5:     addi  $r0, $r0
+l5:     invp  $r5
+        bz    $r5, l6
+        trap
+l6:     ci8   $r6, 1
+        or    $r0, $r6
+        bnz   $r0, l7
+        trap
+l7:     xor   $r0, $r5
+        bnz   $r0, l8
+        trap
+l8:     addi  $r0, $r0
         trap
