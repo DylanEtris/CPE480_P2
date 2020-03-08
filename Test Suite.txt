@@ -49,20 +49,26 @@
 	cup  $r0, 0x80
 	ci8  $r1, -1
 	cup  $r1, -1
-	shii $r0, $r1
+	shii $r0, $r1	
 	bz   $r0, .+2
 	trap
 	cii 	$r0, 1
 	cii 	$r1, 1
-	mulii	$r0, $r1
+	mulii	$r0, $r1 	; mulii test
 	bnz 	$r0, .+2
 	trap
 	ci8     $r0, 1
-	invp    $r0
+	invp    $r0		; invp test
 	bz      $r0, .+2
 	ci8     $r0, 1
-	invpp   $r0
+	invpp   $r0		; invpp test
 	bz      $r0, .+2
+	trap
+	cii 	$r0, 1
+	cii     $r1, 1
+	negii   $r0		; negii test
+	addii	$r0, $r1
+	bz	$r0, .+2
 	trap
 	trap
 
