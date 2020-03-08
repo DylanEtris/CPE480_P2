@@ -36,6 +36,14 @@
 	bz   $r0, .+2
 	trap
 
+	ci8  $r0, 0x80	  ; shii test
+	cup  $r0, 0x80
+	ci8  $r1, 0x80
+	cup  $r1, 0x80
+	shii $r0, $r1
+	bz   $r0, .+2
+	trap
+
 	addp
 .data
    	.word 7
