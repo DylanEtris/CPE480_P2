@@ -100,7 +100,7 @@ module alu(rd, rs, op, aluOut, aluTrap);
 				out `HighBits= rd `HighBits < rs `HighBits; 
 				out `LowBits = rd `LowBits < rs `LowBits; 
 			end
-			`OPaddp: begin assign trap = 1; end
+			`OPaddp: begin trap = 1; end
 			`OPaddpp: begin trap = 1; end
 			`OPmulp: begin trap = 1; end
 			`OPmulpp: begin trap = 1; end
